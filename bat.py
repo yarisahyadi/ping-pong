@@ -32,3 +32,4 @@ class Bat(Turtle):
     def move_down(self):
         new_y = self.ycor() - STEP
         self.goto(self.bat_xcor, new_y)
+        
