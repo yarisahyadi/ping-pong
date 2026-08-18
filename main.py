@@ -17,7 +17,6 @@ table.tracer(0)
 # display the score
 score = Score(TABLE_WIDTH)
 score.line()
-score.scoreboard()
 
 # initiate the bats
 right_bat = Bat(color="yellow", bat_side="right")
@@ -34,15 +33,21 @@ ball = Ball()
 is_game_over = False
 table_edge = TABLE_WIDTH / 2
 
-ball.start()
 while not is_game_over:
     # time.sleep(0.1)
     ball.move()
-    table.update()
+
     if ball.collide(table_edge):
         ball.bounce_side()
 
-    if ball.distance(right_bat) <= 20 or ball.distance(left_bat) <= 20:
+    if ((ball.distance(right_bat) < right_bat.width * 10 and ball.xcor() > right_bat.xcor() - right_bat.length * 20) or 
+        (ball.distance(left_bat) < left_bat.width * 10 and ball.xcor() < left_bat.xcor() + left_bat.length * 20)):
         ball.bounce_bat()
+
+    if ball.xcor() > TABLE_LENGTH / 2 + 20 or ball.xcor() < -TABLE_LENGTH / 2 - 20:
+        ball.goto(0,0)
+        # ball.restart()
+
+    table.update()
 
 table.exitonclick()
