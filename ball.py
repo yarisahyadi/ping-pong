@@ -3,7 +3,7 @@ import random
 
 BALL_SIZE = 20
 BALL_SHAPE = "circle"
-STEP = 0.2
+SPEED = 0.1
 
 class Ball(Turtle):
     def __init__(self, ball_color="white"):
@@ -12,19 +12,17 @@ class Ball(Turtle):
         self.color(ball_color)
         self.shapesize(BALL_SIZE / 20)
         self.penup()
-        self.step_x = STEP
-        self.step_y = STEP
+        self.step_x = SPEED
+        self.step_y = SPEED
 
-    def start(self):
-        self.starting_angle = random.randint(0, 360)
-        self.seth(self.starting_angle)
-        self.forward(STEP)
+    def restart(self):
+        self.goto(0, 0)
+        self.step_x *= -1
         
     def move(self):
-        new_x = self.xcor() + self.step_x
-        new_y = self.ycor() + self.step_y
+        new_x = self.xcor() + random.randint(0, 1) * self.step_x
+        new_y = self.ycor() + random.randint(0, 1) * self.step_y
         self.goto(new_x, new_y)
-        # self.speed("slowest")
 
     def collide(self, table_side):
         self.table_side = table_side
